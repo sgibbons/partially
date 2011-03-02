@@ -21,12 +21,12 @@
 
   * Bind some arguments now, others later, regardless of order (very verbose to do with straight Proc#curry)
 
-  * Works with var-args: :\* ('match the rest') allows for the production of var-args functions from partial application
-      
-      irb> sum = ->(*n) { n.inject(&:+) }
+  * Works with var-args: :\* ('match the rest') allows for the production of var-args functions from partial application     
+
+      irb> sum = -\>(\*n) { n.inject(&:+) }
       irb> sum[1, 2, 3]
       6
-      irb> addAllToOne = sum.partially 1, :*
+      irb> addAllToOne = sum.partially 1, :\*
       irb> addAllToOne[2,4]
       7
 
