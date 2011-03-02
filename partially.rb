@@ -14,3 +14,11 @@ class Proc
   end
 
 end
+
+class Symbol
+
+  def partially(*args_now)
+    self.to_proc.partially(*args_now)
+  end
+
+end
