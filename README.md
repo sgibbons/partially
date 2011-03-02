@@ -5,7 +5,7 @@
     irb> require 'partially'
     
     # arguments that have the placeholder :_ will be bound later, all others bound now
-    irb> replace_dog = :gsub.partially(:_, 'dog', :_)
+    irb> replace_dog = :gsub.partially :_, 'dog', :_
 
     irb> statements = ['I like dogs', 'dogs have fur', 'my dog is great']
 
@@ -21,8 +21,7 @@
 
   * Bind some arguments now, others later, regardless of order (very verbose to do with straight Proc#curry)
 
-  * Works with var-args
-  > Using a trailing :\* allows for the production of var-args functions from partial application
+  * Works with var-args: :\* ('match the rest') allows for the production of var-args functions from partial application
       
       irb> sum = ->(*n) { n.inject(&:+) }
       irb> sum[1, 2, 3]
@@ -32,5 +31,3 @@
       7
 
   * Function arity is inferred automatically (unlike Proc#curry)
-
-
