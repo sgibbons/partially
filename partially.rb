@@ -1,13 +1,20 @@
 
 class Proc
   
-  NOBIND = :_
+  NOBIND = (MATCH_ONE, MATCH_ALL = :_, :*)
   def partially(*args_now)
-    curried = self.curry(args_now.size)
+    uncurried = self
     lambda do |*args_later|
-      evaluated = curried
+      arity = args_now.include?(MATCH_ALL) ? (args_now.size + args_later.size - 1) : args_now.size
+      evaluated = uncurried.curry(arity)
       args_now.each do |arg|
-        evaluated = arg == NOBIND ? evaluated[args_later.pop] : evaluated[arg]
+        evaluated = NOBIND.include?(arg) ? evaluated[args_later.pop] : evaluated[arg]
+        if arg == MATCH_ALL
+          args_later.each do |late_arg|
+            evaluated = evaluated[late_arg]
+          end
+          break
+        end
       end
       evaluated
     end
